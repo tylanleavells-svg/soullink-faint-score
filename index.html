@@ -51,7 +51,6 @@ h1 {
 
 .player-header img {
     width: 180px;
-    height: auto;
     border-radius: 12px;
     border: 2px solid #0070c0;
     background: #fff;
@@ -114,7 +113,6 @@ button:hover {
 
 .death img {
     width: 24px;
-    height: 24px;
     margin-bottom: 2px;
 }
 
@@ -180,35 +178,19 @@ button:hover {
 
 </div>
 
-<datalist id="allpokemon">
+<datalist id="allpokemon"></datalist>
+
 <script>
 const pokemonNames = [
 "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
 "Squirtle","Wartortle","Blastoise","Pikachu","Raichu","Eevee",
 "Vaporeon","Jolteon","Flareon","Espeon","Umbreon"
 ];
-pokemonNames.forEach(p => document.write(`<option value="${p}">`));
-</script>
-</datalist>
 
-<script>
 const players = ["player1","player2","player3","player4"];
 
-function key(id) {
+function storageKey(id) {
     return "soullink_" + id;
-}
-
-function addDeath(playerId) {
-    const input = document.getElementById("select-" + playerId);
-    const name = input.value.trim();
-    if (!name) return alert("Please enter a Pokémon!");
-
-    const saved = JSON.parse(localStorage.getItem(key(playerId))) || [];
-    saved.push(name);
-    localStorage.setItem(key(playerId), JSON.stringify(saved));
-
-    renderDeath(playerId, name);
-    input.value = "";
 }
 
 function renderDeath(playerId, name) {
@@ -227,9 +209,31 @@ function renderDeath(playerId, name) {
         "Total Losses: " + deaths.children.length;
 }
 
+function addDeath(playerId) {
+    const input = document.getElementById("select-" + playerId);
+    const name = input.value.trim();
+    if (!name) return alert("Please enter a Pokémon!");
+
+    const saved = JSON.parse(localStorage.getItem(storageKey(playerId))) || [];
+    saved.push(name);
+    localStorage.setItem(storageKey(playerId), JSON.stringify(saved));
+
+    renderDeath(playerId, name);
+    input.value = "";
+}
+
 function loadAll() {
+    // populate datalist
+    const list = document.getElementById("allpokemon");
+    pokemonNames.forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p;
+        list.appendChild(opt);
+    });
+
+    // load saved deaths
     players.forEach(id => {
-        const saved = JSON.parse(localStorage.getItem(key(id))) || [];
+        const saved = JSON.parse(localStorage.getItem(storageKey(id))) || [];
         saved.forEach(name => renderDeath(id, name));
     });
 }
