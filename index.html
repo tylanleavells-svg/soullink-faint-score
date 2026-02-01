@@ -215,7 +215,65 @@ function addDeath(playerId) {
 
     input.value = "";
 }
+<script>
+function getStorageKey(playerId) {
+    return "soullink_deaths_" + playerId;
+}
+
+function loadDeaths(playerId) {
+    const player = document.getElementById(playerId);
+    const deathsContainer = player.querySelector(".deaths");
+    const saved = JSON.parse(localStorage.getItem(getStorageKey(playerId))) || [];
+
+    saved.forEach(pokemonName => {
+        const death = document.createElement("div");
+        death.classList.add("death");
+        death.innerHTML = `
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
+            ${pokemonName}<br>Fainted
+        `;
+        deathsContainer.appendChild(death);
+    });
+
+    player.querySelector(".counter").textContent =
+        "Total Losses: " + saved.length;
+}
+
+function saveDeaths(playerId) {
+    const player = document.getElementById(playerId);
+    const deaths = Array.from(player.querySelector(".deaths").children)
+        .map(d => d.textContent.replace("Fainted", "").trim());
+
+    localStorage.setItem(getStorageKey(playerId), JSON.stringify(deaths));
+}
+
+function addDeath(playerId) {
+    const player = document.getElementById(playerId);
+    const input = document.getElementById("select-" + playerId);
+    const pokemonName = input.value.trim();
+
+    if (!pokemonName) {
+        alert("Please enter a Pokémon!");
+        return;
+    }
+
+    const newDeath = document.createElement("div");
+    newDeath.classList.add("death");
+    newDeath.innerHTML = `
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
+        ${pokemonName}<br>Fainted
+    `;
+
+    player.querySelector(".deaths").appendChild(newDeath);
+
+    const count = player.querySelector(".deaths").children.length;
+    player.querySelector(".counter").textContent = "Total Losses: " + count;
+
+    saveDeaths(playerId);
+    input.value = "";
+}
+
+// Load saved data on page load
+["player1","player2","player3","player4"].forEach(loadDeaths);
 </script>
 
-</body>
-</html>
