@@ -80,6 +80,7 @@ button {
     border-radius: 6px;
     cursor: pointer;
     font-family: "Press Start 2P", sans-serif;
+    margin-bottom: 4px;
 }
 
 button:hover {
@@ -138,7 +139,8 @@ button:hover {
             <h2>KuroPlays</h2>
         </div>
         <input list="allpokemon" id="select-player1" placeholder="Type or select Pokémon">
-        <button>Add Fainted Pokémon</button>
+        <button class="add-btn">Add Fainted Pokémon</button>
+        <button class="remove-btn">Remove Last Pokémon</button>
         <div class="deaths"></div>
         <div class="counter">Total Losses: 0</div>
     </div>
@@ -149,7 +151,8 @@ button:hover {
             <h2>Blackychan</h2>
         </div>
         <input list="allpokemon" id="select-player2" placeholder="Type or select Pokémon">
-        <button>Add Fainted Pokémon</button>
+        <button class="add-btn">Add Fainted Pokémon</button>
+        <button class="remove-btn">Remove Last Pokémon</button>
         <div class="deaths"></div>
         <div class="counter">Total Losses: 0</div>
     </div>
@@ -160,7 +163,8 @@ button:hover {
             <h2>dboijr</h2>
         </div>
         <input list="allpokemon" id="select-player3" placeholder="Type or select Pokémon">
-        <button>Add Fainted Pokémon</button>
+        <button class="add-btn">Add Fainted Pokémon</button>
+        <button class="remove-btn">Remove Last Pokémon</button>
         <div class="deaths"></div>
         <div class="counter">Total Losses: 0</div>
     </div>
@@ -171,7 +175,8 @@ button:hover {
             <h2>slxsher</h2>
         </div>
         <input list="allpokemon" id="select-player4" placeholder="Type or select Pokémon">
-        <button>Add Fainted Pokémon</button>
+        <button class="add-btn">Add Fainted Pokémon</button>
+        <button class="remove-btn">Remove Last Pokémon</button>
         <div class="deaths"></div>
         <div class="counter">Total Losses: 0</div>
     </div>
@@ -189,44 +194,50 @@ const pokemonNames = [
 
 const players = ["player1","player2","player3","player4"];
 
-function key(id) {
+function storageKey(id) {
     return "soullink_" + id;
 }
 
-function renderDeath(playerId, name) {
+function renderDeaths(playerId, names) {
     const player = document.getElementById(playerId);
-    const deaths = player.querySelector(".deaths");
+    const deathsDiv = player.querySelector(".deaths");
+    deathsDiv.innerHTML = "";
 
-    const d = document.createElement("div");
-    d.className = "death";
-    d.innerHTML = `
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
-        ${name}<br>Fainted
-    `;
-    deaths.appendChild(d);
+    names.forEach(name => {
+        const d = document.createElement("div");
+        d.className = "death";
+        d.innerHTML = `
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
+            ${name}<br>Fainted
+        `;
+        deathsDiv.appendChild(d);
+    });
 
-    player.querySelector(".counter").textContent =
-        "Total Losses: " + deaths.children.length;
+    player.querySelector(".counter").textContent = "Total Losses: " + names.length;
 }
 
 function addDeath(playerId) {
     const input = document.getElementById("select-" + playerId);
     const name = input.value.trim();
-    if (!name) {
-        alert("Please enter a Pokémon!");
-        return;
-    }
+    if (!name) { alert("Please enter a Pokémon!"); return; }
 
-    const saved = JSON.parse(localStorage.getItem(key(playerId))) || [];
+    const saved = JSON.parse(localStorage.getItem(storageKey(playerId))) || [];
     saved.push(name);
-    localStorage.setItem(key(playerId), JSON.stringify(saved));
-
-    renderDeath(playerId, name);
+    localStorage.setItem(storageKey(playerId), JSON.stringify(saved));
+    renderDeaths(playerId, saved);
     input.value = "";
 }
 
+function removeDeath(playerId) {
+    const saved = JSON.parse(localStorage.getItem(storageKey(playerId))) || [];
+    if (saved.length === 0) return alert("No Pokémon to remove!");
+    saved.pop();
+    localStorage.setItem(storageKey(playerId), JSON.stringify(saved));
+    renderDeaths(playerId, saved);
+}
+
 window.addEventListener("DOMContentLoaded", () => {
-    // fill Pokémon list
+    // Populate Pokémon list
     const list = document.getElementById("allpokemon");
     pokemonNames.forEach(p => {
         const opt = document.createElement("option");
@@ -234,17 +245,17 @@ window.addEventListener("DOMContentLoaded", () => {
         list.appendChild(opt);
     });
 
-    // attach buttons
+    // Attach buttons and load saved data
     players.forEach(id => {
-        document
-            .querySelector(`#${id} button`)
-            .addEventListener("click", () => addDeath(id));
-    });
+        const player = document.getElementById(id);
+        const addBtn = player.querySelector(".add-btn");
+        const removeBtn = player.querySelector(".remove-btn");
 
-    // load saved deaths
-    players.forEach(id => {
-        const saved = JSON.parse(localStorage.getItem(key(id))) || [];
-        saved.forEach(name => renderDeath(id, name));
+        addBtn.addEventListener("click", () => addDeath(id));
+        removeBtn.addEventListener("click", () => removeDeath(id));
+
+        const saved = JSON.parse(localStorage.getItem(storageKey(id))) || [];
+        renderDeaths(id, saved);
     });
 });
 </script>
