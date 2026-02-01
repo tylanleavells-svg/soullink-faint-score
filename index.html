@@ -87,7 +87,6 @@ button:hover {
     background-color: #005090;
 }
 
-/* PC-style 6x6 grid */
 .deaths {
     margin-top: 10px;
     background: linear-gradient(to bottom, #c0f0ff 0%, #80d0ff 100%);
@@ -135,10 +134,9 @@ button:hover {
 
 <div class="board">
 
-    <!-- Player 1: KuroPlays -->
     <div class="player" id="player1">
         <div class="player-header">
-            <img src="https://i.imgur.com/6zEVuyV.png" alt="Iono Masters EX">
+            <img src="https://i.imgur.com/6zEVuyV.png">
             <h2>KuroPlays</h2>
         </div>
         <input list="allpokemon" id="select-player1" placeholder="Type or select Pokémon">
@@ -147,10 +145,9 @@ button:hover {
         <div class="counter">Total Losses: 0</div>
     </div>
 
-    <!-- Player 2: Blackychan (Zinnia) -->
     <div class="player" id="player2">
         <div class="player-header">
-            <img src="https://i.imgur.com/wJ6o0Rs.png" alt="Zinnia Masters EX">
+            <img src="https://i.imgur.com/wJ6o0Rs.png">
             <h2>Blackychan</h2>
         </div>
         <input list="allpokemon" id="select-player2" placeholder="Type or select Pokémon">
@@ -159,10 +156,9 @@ button:hover {
         <div class="counter">Total Losses: 0</div>
     </div>
 
-    <!-- Player 3: dboijr -->
     <div class="player" id="player3">
         <div class="player-header">
-            <img src="https://i.imgur.com/3RTTK31.png" alt="Bea Masters EX">
+            <img src="https://i.imgur.com/3RTTK31.png">
             <h2>dboijr</h2>
         </div>
         <input list="allpokemon" id="select-player3" placeholder="Type or select Pokémon">
@@ -171,10 +167,9 @@ button:hover {
         <div class="counter">Total Losses: 0</div>
     </div>
 
-    <!-- Player 4: slxsher -->
     <div class="player" id="player4">
         <div class="player-header">
-            <img src="https://i.imgur.com/Ni1rhD4.png" alt="Steven Masters EX">
+            <img src="https://i.imgur.com/Ni1rhD4.png">
             <h2>slxsher</h2>
         </div>
         <input list="allpokemon" id="select-player4" placeholder="Type or select Pokémon">
@@ -189,91 +184,58 @@ button:hover {
 <script>
 const pokemonNames = [
 "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
-"Squirtle","Wartortle","Blastoise","Pikachu","Raichu","Eevee","Vaporeon","Jolteon","Flareon","Espeon","Umbreon"
-// Add full Gen 1–7 Pokémon here
+"Squirtle","Wartortle","Blastoise","Pikachu","Raichu","Eevee",
+"Vaporeon","Jolteon","Flareon","Espeon","Umbreon"
 ];
-pokemonNames.forEach(name => {
-    document.write(`<option value="${name}">`);
-});
+pokemonNames.forEach(p => document.write(`<option value="${p}">`));
 </script>
 </datalist>
 
 <script>
+const players = ["player1","player2","player3","player4"];
+
+function key(id) {
+    return "soullink_" + id;
+}
+
 function addDeath(playerId) {
-    const player = document.getElementById(playerId);
     const input = document.getElementById("select-" + playerId);
-    const pokemonName = input.value.trim();
-    if (!pokemonName) return alert("Please enter a Pokémon!");
+    const name = input.value.trim();
+    if (!name) return alert("Please enter a Pokémon!");
 
-    const newDeath = document.createElement("div");
-    newDeath.classList.add("death");
-    newDeath.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Poké Ball">${pokemonName}<br>Fainted`;
-    player.querySelector(".deaths").appendChild(newDeath);
+    const saved = JSON.parse(localStorage.getItem(key(playerId))) || [];
+    saved.push(name);
+    localStorage.setItem(key(playerId), JSON.stringify(saved));
 
-    const count = player.querySelector(".deaths").children.length;
-    player.querySelector(".counter").textContent = "Total Losses: " + count;
-
+    renderDeath(playerId, name);
     input.value = "";
 }
-<script>
-function getStorageKey(playerId) {
-    return "soullink_deaths_" + playerId;
-}
 
-function loadDeaths(playerId) {
+function renderDeath(playerId, name) {
     const player = document.getElementById(playerId);
-    const deathsContainer = player.querySelector(".deaths");
-    const saved = JSON.parse(localStorage.getItem(getStorageKey(playerId))) || [];
+    const deaths = player.querySelector(".deaths");
 
-    saved.forEach(pokemonName => {
-        const death = document.createElement("div");
-        death.classList.add("death");
-        death.innerHTML = `
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
-            ${pokemonName}<br>Fainted
-        `;
-        deathsContainer.appendChild(death);
-    });
+    const d = document.createElement("div");
+    d.className = "death";
+    d.innerHTML = `
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
+        ${name}<br>Fainted
+    `;
+    deaths.appendChild(d);
 
     player.querySelector(".counter").textContent =
-        "Total Losses: " + saved.length;
+        "Total Losses: " + deaths.children.length;
 }
 
-function saveDeaths(playerId) {
-    const player = document.getElementById(playerId);
-    const deaths = Array.from(player.querySelector(".deaths").children)
-        .map(d => d.textContent.replace("Fainted", "").trim());
-
-    localStorage.setItem(getStorageKey(playerId), JSON.stringify(deaths));
+function loadAll() {
+    players.forEach(id => {
+        const saved = JSON.parse(localStorage.getItem(key(id))) || [];
+        saved.forEach(name => renderDeath(id, name));
+    });
 }
 
-function addDeath(playerId) {
-    const player = document.getElementById(playerId);
-    const input = document.getElementById("select-" + playerId);
-    const pokemonName = input.value.trim();
-
-    if (!pokemonName) {
-        alert("Please enter a Pokémon!");
-        return;
-    }
-
-    const newDeath = document.createElement("div");
-    newDeath.classList.add("death");
-    newDeath.innerHTML = `
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
-        ${pokemonName}<br>Fainted
-    `;
-
-    player.querySelector(".deaths").appendChild(newDeath);
-
-    const count = player.querySelector(".deaths").children.length;
-    player.querySelector(".counter").textContent = "Total Losses: " + count;
-
-    saveDeaths(playerId);
-    input.value = "";
-}
-
-// Load saved data on page load
-["player1","player2","player3","player4"].forEach(loadDeaths);
+window.addEventListener("DOMContentLoaded", loadAll);
 </script>
 
+</body>
+</html>
