@@ -1,3 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Uncivilized Pokémon SoulLink Faint Score</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+body {
+    background: #1a1a2e;
+    font-family: "Press Start 2P", sans-serif;
+    color: #fff;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #f8f8f8;
+    text-shadow: 2px 2px #000080;
+}
+
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.player {
+    background: #e0f8ff;
+    border: 3px solid #0070c0;
+    border-radius: 12px;
+    width: 360px;
+    padding: 15px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+}
+
+.player-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    background: #a0e0ff;
+    border: 2px solid #0070c0;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+.player-header img {
+    width: 180px;
+    border-radius: 12px;
+    border: 2px solid #0070c0;
+    background: #fff;
+}
+
+.player-header h2 {
+    font-size: 1rem;
+    color: #000080;
+}
+
+input[list] {
+    width: 100%;
+    padding: 6px;
+    border-radius: 6px;
+    border: 2px solid #0070c0;
+    margin-bottom: 6px;
+    font-family: "Press Start 2P", sans-serif;
+}
+
+button {
+    width: 100%;
+    padding: 6px;
+    background-color: #0070c0;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: "Press Start 2P", sans-serif;
+}
+
+button:hover {
+    background-color: #005090;
+}
+
+.deaths {
+    margin-top: 10px;
+    background: linear-gradient(to bottom, #c0f0ff 0%, #80d0ff 100%);
+    border: 2px solid #0070c0;
+    border-radius: 8px;
+    padding: 6px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 50px);
+    gap: 4px;
+}
+
+.death {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #f0ffff;
+    border: 2px solid #0070c0;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    color: #000080;
+    text-align: center;
+}
+
+.death img {
+    width: 24px;
+    margin-bottom: 2px;
+}
+
+.counter {
+    margin-top: 6px;
+    font-weight: bold;
+    color: #000080;
+    font-size: 0.8rem;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Uncivilized Pokémon SoulLink Faint Score</h1>
+
+<div class="board">
+
+    <div class="player" id="player1">
+        <div class="player-header">
+            <img src="https://i.imgur.com/6zEVuyV.png">
+            <h2>KuroPlays</h2>
+        </div>
+        <input list="allpokemon" id="select-player1" placeholder="Type or select Pokémon">
+        <button>Add Fainted Pokémon</button>
+        <div class="deaths"></div>
+        <div class="counter">Total Losses: 0</div>
+    </div>
+
+    <div class="player" id="player2">
+        <div class="player-header">
+            <img src="https://i.imgur.com/wJ6o0Rs.png">
+            <h2>Blackychan</h2>
+        </div>
+        <input list="allpokemon" id="select-player2" placeholder="Type or select Pokémon">
+        <button>Add Fainted Pokémon</button>
+        <div class="deaths"></div>
+        <div class="counter">Total Losses: 0</div>
+    </div>
+
+    <div class="player" id="player3">
+        <div class="player-header">
+            <img src="https://i.imgur.com/3RTTK31.png">
+            <h2>dboijr</h2>
+        </div>
+        <input list="allpokemon" id="select-player3" placeholder="Type or select Pokémon">
+        <button>Add Fainted Pokémon</button>
+        <div class="deaths"></div>
+        <div class="counter">Total Losses: 0</div>
+    </div>
+
+    <div class="player" id="player4">
+        <div class="player-header">
+            <img src="https://i.imgur.com/Ni1rhD4.png">
+            <h2>slxsher</h2>
+        </div>
+        <input list="allpokemon" id="select-player4" placeholder="Type or select Pokémon">
+        <button>Add Fainted Pokémon</button>
+        <div class="deaths"></div>
+        <div class="counter">Total Losses: 0</div>
+    </div>
+
+</div>
+
+<datalist id="allpokemon"></datalist>
+
 <script>
 const pokemonNames = [
 "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
@@ -7,7 +189,7 @@ const pokemonNames = [
 
 const players = ["player1","player2","player3","player4"];
 
-function storageKey(id) {
+function key(id) {
     return "soullink_" + id;
 }
 
@@ -35,16 +217,16 @@ function addDeath(playerId) {
         return;
     }
 
-    const saved = JSON.parse(localStorage.getItem(storageKey(playerId))) || [];
+    const saved = JSON.parse(localStorage.getItem(key(playerId))) || [];
     saved.push(name);
-    localStorage.setItem(storageKey(playerId), JSON.stringify(saved));
+    localStorage.setItem(key(playerId), JSON.stringify(saved));
 
     renderDeath(playerId, name);
     input.value = "";
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    // populate datalist
+    // fill Pokémon list
     const list = document.getElementById("allpokemon");
     pokemonNames.forEach(p => {
         const opt = document.createElement("option");
@@ -52,17 +234,20 @@ window.addEventListener("DOMContentLoaded", () => {
         list.appendChild(opt);
     });
 
-    // hook up buttons safely
+    // attach buttons
     players.forEach(id => {
         document
             .querySelector(`#${id} button`)
             .addEventListener("click", () => addDeath(id));
     });
 
-    // load saved data
+    // load saved deaths
     players.forEach(id => {
-        const saved = JSON.parse(localStorage.getItem(storageKey(id))) || [];
+        const saved = JSON.parse(localStorage.getItem(key(id))) || [];
         saved.forEach(name => renderDeath(id, name));
     });
 });
 </script>
+
+</body>
+</html>
