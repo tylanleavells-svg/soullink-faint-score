@@ -3,137 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Uncivilized Pokémon SoulLink Faint Score</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
 <style>
-body {
-    background: #1a1a2e;
-    font-family: "Press Start 2P", sans-serif;
-    color: #fff;
-    padding: 20px;
-}
-
-h1 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 30px;
-    color: #f8f8f8;
-    text-shadow: 2px 2px #000080;
-}
-
-.board {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.player {
-    background: #e0f8ff;
-    border: 3px solid #0070c0;
-    border-radius: 12px;
-    width: 360px;
-    padding: 15px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
-}
-
-.player-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 10px;
-    background: #a0e0ff;
-    border: 2px solid #0070c0;
-    border-radius: 8px;
-    padding: 6px;
-}
-
-.player-header img {
-    width: 180px;
-    border-radius: 12px;
-    border: 2px solid #0070c0;
-    background: #fff;
-}
-
-.player-header h2 {
-    font-size: 1rem;
-    color: #000080;
-}
-
-input[list] {
-    width: 100%;
-    padding: 6px;
-    border-radius: 6px;
-    border: 2px solid #0070c0;
-    margin-bottom: 6px;
-    font-family: "Press Start 2P", sans-serif;
-}
-
-button {
-    width: 100%;
-    padding: 6px;
-    background-color: #0070c0;
-    color: #fff;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: "Press Start 2P", sans-serif;
-    margin-bottom: 4px;
-}
-
-button:hover {
-    background-color: #005090;
-}
-
-.deaths {
-    margin-top: 10px;
-    background: linear-gradient(to bottom, #c0f0ff 0%, #80d0ff 100%);
-    border: 2px solid #0070c0;
-    border-radius: 8px;
-    padding: 6px;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 50px);
-    gap: 4px;
-}
-
-.death {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background: #f0ffff;
-    border: 2px solid #0070c0;
-    border-radius: 6px;
-    font-size: 0.65rem;
-    color: #000080;
-    text-align: center;
-}
-
-.death img {
-    width: 24px;
-    margin-bottom: 2px;
-}
-
-.counter {
-    margin-top: 6px;
-    font-weight: bold;
-    color: #000080;
-    font-size: 0.8rem;
-    text-align: center;
-}
+body { background: #1a1a2e; font-family: "Press Start 2P", sans-serif; color: #fff; padding: 20px; }
+h1 { text-align: center; font-size: 2rem; margin-bottom: 30px; color: #f8f8f8; text-shadow: 2px 2px #000080; }
+.board { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+.player { background: #e0f8ff; border: 3px solid #0070c0; border-radius: 12px; width: 360px; padding: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.5); }
+.player-header { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; background: #a0e0ff; border: 2px solid #0070c0; border-radius: 8px; padding: 6px; }
+.player-header img { width: 180px; border-radius: 12px; border: 2px solid #0070c0; background: #fff; }
+.player-header h2 { font-size: 1rem; color: #000080; }
+input[list] { width: 100%; padding: 6px; border-radius: 6px; border: 2px solid #0070c0; margin-bottom: 6px; font-family: "Press Start 2P", sans-serif; }
+button { width: 100%; padding: 6px; background-color: #0070c0; color: #fff; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-family: "Press Start 2P", sans-serif; margin-bottom: 4px; }
+button:hover { background-color: #005090; }
+.deaths { margin-top: 10px; background: linear-gradient(to bottom, #c0f0ff 0%, #80d0ff 100%); border: 2px solid #0070c0; border-radius: 8px; padding: 6px; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(6, 50px); gap: 4px; }
+.death { display: flex; align-items: center; justify-content: center; flex-direction: column; background: #f0ffff; border: 2px solid #0070c0; border-radius: 6px; font-size: 0.65rem; color: #000080; text-align: center; }
+.death img { width: 32px; height: 32px; margin-bottom: 2px; cursor: pointer; }
+.counter { margin-top: 6px; font-weight: bold; color: #000080; font-size: 0.8rem; text-align: center; }
 </style>
 </head>
-
 <body>
 
 <h1>Uncivilized Pokémon SoulLink Faint Score</h1>
 
 <div class="board">
 
-    <!-- Player 1: KuroPlays -->
     <div class="player" id="player1">
         <div class="player-header">
             <img src="https://i.imgur.com/6zEVuyV.png">
@@ -146,7 +39,6 @@ button:hover {
         <div class="counter">Total Losses: 0</div>
     </div>
 
-    <!-- Player 2: Blackychan -->
     <div class="player" id="player2">
         <div class="player-header">
             <img src="https://i.imgur.com/wJ6o0Rs.png">
@@ -159,7 +51,6 @@ button:hover {
         <div class="counter">Total Losses: 0</div>
     </div>
 
-    <!-- Player 3: Dboijr -->
     <div class="player" id="player3">
         <div class="player-header">
             <img src="https://i.imgur.com/3RTTK31.png">
@@ -172,7 +63,6 @@ button:hover {
         <div class="counter">Total Losses: 0</div>
     </div>
 
-    <!-- Player 4: Slxsher -->
     <div class="player" id="player4">
         <div class="player-header">
             <img src="https://i.imgur.com/Ni1rhD4.png">
@@ -190,71 +80,90 @@ button:hover {
 <datalist id="allpokemon"></datalist>
 
 <script>
-const pokemonNames = [
-"Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard",
-"Squirtle","Wartortle","Blastoise","Pikachu","Raichu","Eevee",
-"Vaporeon","Jolteon","Flareon","Espeon","Umbreon"
-];
+let pokemonNames = [];
+let pokemonSpriteMap = {};
 
 const players = ["player1","player2","player3","player4"];
 
-function storageKey(id) {
-    return "soullink_" + id;
+// Fetch the first 898 Pokémon from PokéAPI (National Dex order) :contentReference[oaicite:0]{index=0}
+async function loadPokemonList() {
+    try {
+        const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=898");
+        const data = await response.json();
+        pokemonNames = data.results.map(p => p.name.charAt(0).toUpperCase() + p.name.slice(1));
+        pokemonNames.forEach((name, idx) => {
+            // PokéAPI uses lowercase names in URLs
+            const keyName = data.results[idx].name;
+            pokemonSpriteMap[name] = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idx+1}.png`;
+        });
+
+        const list = document.getElementById("allpokemon");
+        pokemonNames.forEach(p => {
+            const opt = document.createElement("option");
+            opt.value = p;
+            list.appendChild(opt);
+        });
+
+        // Render existing stored data
+        players.forEach(id => renderDeaths(id));
+    } catch (err) {
+        console.error("Failed to load Pokémon list:", err);
+    }
 }
 
-function renderDeaths(playerId, names) {
+// Render deaths from localStorage
+function renderDeaths(playerId) {
     const player = document.getElementById(playerId);
     const deathsDiv = player.querySelector(".deaths");
+    const arr = JSON.parse(localStorage.getItem(playerId)) || [];
     deathsDiv.innerHTML = "";
-
-    names.forEach(name => {
+    arr.forEach((name, idx) => {
         const d = document.createElement("div");
         d.className = "death";
-        d.innerHTML = `
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
-            ${name}<br>Fainted
-        `;
+        const spriteUrl = pokemonSpriteMap[name] || "";
+        d.innerHTML = `<img src="${spriteUrl}"> ${name}<br>Fainted`;
+        d.onclick = () => removeSpecificDeath(playerId, idx);
         deathsDiv.appendChild(d);
     });
-
-    player.querySelector(".counter").textContent = "Total Losses: " + names.length;
+    player.querySelector(".counter").textContent = "Total Losses: " + arr.length;
 }
 
+// Add fainted Pokémon
 function addDeath(playerId) {
     const input = document.getElementById("select-" + playerId);
     const name = input.value.trim();
-    if (!name) { alert("Please enter a Pokémon!"); return; }
-
-    const saved = JSON.parse(localStorage.getItem(storageKey(playerId))) || [];
-    saved.push(name);
-    localStorage.setItem(storageKey(playerId), JSON.stringify(saved));
-    renderDeaths(playerId, saved);
+    if (!name) return alert("Please enter a Pokémon!");
+    if (!pokemonNames.includes(name)) return alert("That Pokémon doesn’t exist!");
+    const arr = JSON.parse(localStorage.getItem(playerId)) || [];
+    arr.push(name);
+    localStorage.setItem(playerId, JSON.stringify(arr));
+    renderDeaths(playerId);
     input.value = "";
 }
 
+// Remove the last fainted Pokémon
 function removeDeath(playerId) {
-    const saved = JSON.parse(localStorage.getItem(storageKey(playerId))) || [];
-    if (saved.length === 0) return alert("No Pokémon to remove!");
-    saved.pop();
-    localStorage.setItem(storageKey(playerId), JSON.stringify(saved));
-    renderDeaths(playerId, saved);
+    const arr = JSON.parse(localStorage.getItem(playerId)) || [];
+    if (!arr.length) return;
+    arr.pop();
+    localStorage.setItem(playerId, JSON.stringify(arr));
+    renderDeaths(playerId);
+}
+
+// Remove a specific fainted Pokémon
+function removeSpecificDeath(playerId, index) {
+    const arr = JSON.parse(localStorage.getItem(playerId)) || [];
+    arr.splice(index, 1);
+    localStorage.setItem(playerId, JSON.stringify(arr));
+    renderDeaths(playerId);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    const list = document.getElementById("allpokemon");
-    pokemonNames.forEach(p => {
-        const opt = document.createElement("option");
-        opt.value = p;
-        list.appendChild(opt);
-    });
-
+    loadPokemonList(); // load names + sprites
     players.forEach(id => {
         const player = document.getElementById(id);
         player.querySelector(".add-btn").addEventListener("click", () => addDeath(id));
         player.querySelector(".remove-btn").addEventListener("click", () => removeDeath(id));
-
-        const saved = JSON.parse(localStorage.getItem(storageKey(id))) || [];
-        renderDeaths(id, saved);
     });
 });
 </script>
