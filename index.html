@@ -2,267 +2,326 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Uncivilized Pokémon SoulLink Faint Score</title>
+<title>Uncivilized Soul Link</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
 body {
-    background: #1a1a2e;
-    font-family: "Press Start 2P", sans-serif;
-    color: #fff;
+    margin: 0;
     padding: 20px;
+    background: radial-gradient(circle at top, #0f1628, #060912);
+    font-family: "Press Start 2P", sans-serif;
+    color: white;
 }
 
 h1 {
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px #000080;
+    font-size: 1rem;
+    margin-bottom: 20px;
 }
 
 .board {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
 }
 
+/* PLAYER CARD */
 .player {
-    background: #e0f8ff;
-    border: 3px solid #0070c0;
+    background: #e9efff;
+    color: black;
     border-radius: 12px;
-    width: 360px;
-    padding: 15px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+    padding: 12px;
+    border: 3px solid #2b4cff;
 }
 
+/* HEADER */
 .player-header {
     display: flex;
+    gap: 14px;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 10px;
-    background: #a0e0ff;
-    border: 2px solid #0070c0;
-    border-radius: 8px;
-    padding: 6px;
+    background: #2f55ff;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
 }
 
+/* PROFILE IMAGE */
 .player-header img {
-    width: 180px;
-    border-radius: 12px;
-    border: 2px solid #0070c0;
-    background: #fff;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+    border: none;
 }
 
-.player-header h2 {
-    font-size: 1rem;
-    color: #000080;
+.player-header div {
+    font-size: 0.7rem;
 }
 
-input[list] {
+/* INPUT */
+input {
     width: 100%;
-    padding: 6px;
+    margin-top: 10px;
+    padding: 8px;
     border-radius: 6px;
-    border: 2px solid #0070c0;
-    margin-bottom: 6px;
-    font-family: "Press Start 2P", sans-serif;
+    border: 2px solid #2b4cff;
+    font-family: inherit;
+    font-size: 0.55rem;
 }
 
+/* BUTTONS */
 button {
     width: 100%;
-    padding: 6px;
-    background-color: #0070c0;
-    color: #fff;
+    margin-top: 6px;
+    padding: 8px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-family: "Press Start 2P", sans-serif;
-    margin-bottom: 4px;
+    font-family: inherit;
+    font-size: 0.55rem;
 }
 
-button:hover {
-    background-color: #005090;
-}
+.add { background:#2b4cff; color:white; }
+.remove { background:#ff4b4b; color:white; }
 
-/* ✅ DOWNWARD-FILLING PC GRID */
+/* GRID */
 .deaths {
     margin-top: 10px;
-    background: linear-gradient(to bottom, #c0f0ff 0%, #80d0ff 100%);
-    border: 2px solid #0070c0;
-    border-radius: 8px;
-    padding: 6px;
-
     display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(6, 50px);
-    grid-auto-columns: 1fr;
-    gap: 4px;
-
-    max-height: 320px;
-    overflow-y: auto;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
 }
 
+/* POKÉMON CARD */
 .death {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background: #f0ffff;
-    border: 2px solid #0070c0;
-    border-radius: 6px;
-    font-size: 0.65rem;
-    color: #000080;
+    background: white;
+    border-radius: 14px;
+    padding: 10px;
     text-align: center;
+    font-size: 0.55rem;
+    cursor: grab;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    border: 2px solid #2b4cff;
+
+    transition: transform 0.15s ease;
 }
 
+.death:hover {
+    transform: scale(1.05);
+}
+
+/* BIG SPRITES */
 .death img {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 2px;
-    cursor: pointer;
+    width: 180px;
+    height: 180px;
+    image-rendering: pixelated;
 }
 
 .counter {
-    margin-top: 6px;
-    font-weight: bold;
-    color: #000080;
-    font-size: 0.8rem;
+    margin-top: 8px;
     text-align: center;
+    font-size: 0.6rem;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Uncivilized Pokémon SoulLink Faint Score</h1>
+<h1>Uncivilized Soul Link</h1>
 
 <div class="board">
 
+<!-- PLAYERS -->
 <div class="player" id="player1">
     <div class="player-header">
-        <img src="https://i.imgur.com/6zEVuyV.png">
-        <h2>KuroPlays</h2>
+        <img src="https://i.imgur.com/H1Ee8Rp.png">
+        <div>KuroPlays</div>
     </div>
-    <input list="allpokemon" id="select-player1">
-    <button class="add-btn">Add Fainted Pokémon</button>
-    <button class="remove-btn">Remove Last Pokémon</button>
+    <input id="input-player1">
+    <button class="add">Add</button>
+    <button class="remove">Remove</button>
     <div class="deaths"></div>
-    <div class="counter">Total Losses: 0</div>
+    <div class="counter">0</div>
 </div>
 
 <div class="player" id="player2">
     <div class="player-header">
-        <img src="https://i.imgur.com/wJ6o0Rs.png">
-        <h2>Blackychan</h2>
+        <img src="https://i.imgur.com/vBYrvOU.png">
+        <div>Blackychan</div>
     </div>
-    <input list="allpokemon" id="select-player2">
-    <button class="add-btn">Add Fainted Pokémon</button>
-    <button class="remove-btn">Remove Last Pokémon</button>
+    <input id="input-player2">
+    <button class="add">Add</button>
+    <button class="remove">Remove</button>
     <div class="deaths"></div>
-    <div class="counter">Total Losses: 0</div>
+    <div class="counter">0</div>
 </div>
 
 <div class="player" id="player3">
     <div class="player-header">
         <img src="https://i.imgur.com/3RTTK31.png">
-        <h2>Dboijr</h2>
+        <div>Dboijr</div>
     </div>
-    <input list="allpokemon" id="select-player3">
-    <button class="add-btn">Add Fainted Pokémon</button>
-    <button class="remove-btn">Remove Last Pokémon</button>
+    <input id="input-player3">
+    <button class="add">Add</button>
+    <button class="remove">Remove</button>
     <div class="deaths"></div>
-    <div class="counter">Total Losses: 0</div>
+    <div class="counter">0</div>
 </div>
 
 <div class="player" id="player4">
     <div class="player-header">
         <img src="https://i.imgur.com/Ni1rhD4.png">
-        <h2>Slxsher</h2>
+        <div>Slxsher</div>
     </div>
-    <input list="allpokemon" id="select-player4">
-    <button class="add-btn">Add Fainted Pokémon</button>
-    <button class="remove-btn">Remove Last Pokémon</button>
+    <input id="input-player4">
+    <button class="add">Add</button>
+    <button class="remove">Remove</button>
     <div class="deaths"></div>
-    <div class="counter">Total Losses: 0</div>
+    <div class="counter">0</div>
+</div>
+
+<div class="player" id="player5">
+    <div class="player-header">
+        <img src="https://i.imgur.com/7C0CuBa.png">
+        <div>Jerri</div>
+    </div>
+    <input id="input-player5">
+    <button class="add">Add</button>
+    <button class="remove">Remove</button>
+    <div class="deaths"></div>
+    <div class="counter">0</div>
 </div>
 
 </div>
-
-<datalist id="allpokemon"></datalist>
 
 <script>
-const players = ["player1","player2","player3","player4"];
-let pokemonNames = [];
-let pokemonSprites = {};
+const players = ["player1","player2","player3","player4","player5"];
 
-async function loadPokemon() {
-    const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=898");
-    const data = await res.json();
+let data = {};
+let spriteMap = {};
 
-    data.results.forEach((p, i) => {
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await loadDex();
+
+    players.forEach(id => {
+        data[id] = JSON.parse(localStorage.getItem(id)) || [];
+
+        const el = document.getElementById(id);
+
+        el.querySelector(".add").onclick = () => {
+            const input = el.querySelector("input");
+            if (!input.value) return;
+
+            data[id].push(input.value);
+            save(id);
+            input.value = "";
+            render(id);
+        };
+
+        el.querySelector(".remove").onclick = () => {
+            data[id].pop();
+            save(id);
+            render(id);
+        };
+
+        const box = el.querySelector(".deaths");
+
+        box.addEventListener("dragover", e => e.preventDefault());
+
+        box.addEventListener("drop", e => {
+            const d = JSON.parse(e.dataTransfer.getData("text"));
+
+            const moved = data[d.from].splice(d.index, 1)[0];
+            data[id].push(moved);
+
+            save(d.from);
+            save(id);
+
+            render(d.from);
+            render(id);
+        });
+    });
+
+    players.forEach(render);
+});
+
+// RENDER (FIXED SPRITES)
+function render(id) {
+    const box = document.querySelector(`#${id} .deaths`);
+    const counter = document.querySelector(`#${id} .counter`);
+
+    box.innerHTML = "";
+
+    data[id].forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "death";
+        div.draggable = true;
+
+        const key = p.toLowerCase();
+        const spriteId = spriteMap[key] || 1;
+
+        div.innerHTML = `
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${spriteId}.png">
+            <div>${p}</div>
+        `;
+
+        div.onclick = () => {
+            data[id].splice(i, 1);
+            save(id);
+            render(id);
+        };
+
+        div.addEventListener("dragstart", e => {
+            e.dataTransfer.setData("text", JSON.stringify({
+                from: id,
+                index: i
+            }));
+        });
+
+        box.appendChild(div);
+    });
+
+    counter.textContent = data[id].length;
+}
+
+// SAVE
+function save(id) {
+    localStorage.setItem(id, JSON.stringify(data[id]));
+}
+
+// POKEDEX + SPRITE MAP
+async function loadDex() {
+    const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1010");
+    const json = await res.json();
+
+    const list = document.createElement("datalist");
+    list.id = "dexlist";
+
+    json.results.forEach((p, index) => {
         const name = p.name.charAt(0).toUpperCase() + p.name.slice(1);
-        pokemonNames.push(name);
-        pokemonSprites[name] = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png`;
+
+        spriteMap[p.name.toLowerCase()] = index + 1;
 
         const opt = document.createElement("option");
         opt.value = name;
-        document.getElementById("allpokemon").appendChild(opt);
+        list.appendChild(opt);
     });
 
-    players.forEach(renderDeaths);
-}
+    document.body.appendChild(list);
 
-function renderDeaths(playerId) {
-    const player = document.getElementById(playerId);
-    const deathsDiv = player.querySelector(".deaths");
-    const data = JSON.parse(localStorage.getItem(playerId)) || [];
-
-    deathsDiv.innerHTML = "";
-    data.forEach((name, i) => {
-        const d = document.createElement("div");
-        d.className = "death";
-        d.innerHTML = `<img src="${pokemonSprites[name]}">${name}<br>Fainted`;
-        d.onclick = () => removeSpecific(playerId, i);
-        deathsDiv.appendChild(d);
+    document.querySelectorAll("input").forEach(i => {
+        i.setAttribute("list", "dexlist");
     });
-
-    player.querySelector(".counter").textContent = "Total Losses: " + data.length;
 }
-
-function addDeath(playerId) {
-    const input = document.getElementById("select-" + playerId);
-    const name = input.value.trim();
-    if (!pokemonNames.includes(name)) return alert("Invalid Pokémon");
-
-    const arr = JSON.parse(localStorage.getItem(playerId)) || [];
-    arr.push(name);
-    localStorage.setItem(playerId, JSON.stringify(arr));
-    input.value = "";
-    renderDeaths(playerId);
-}
-
-function removeDeath(playerId) {
-    const arr = JSON.parse(localStorage.getItem(playerId)) || [];
-    arr.pop();
-    localStorage.setItem(playerId, JSON.stringify(arr));
-    renderDeaths(playerId);
-}
-
-function removeSpecific(playerId, index) {
-    const arr = JSON.parse(localStorage.getItem(playerId)) || [];
-    arr.splice(index, 1);
-    localStorage.setItem(playerId, JSON.stringify(arr));
-    renderDeaths(playerId);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    loadPokemon();
-    players.forEach(id => {
-        document.querySelector(`#${id} .add-btn`).onclick = () => addDeath(id);
-        document.querySelector(`#${id} .remove-btn`).onclick = () => removeDeath(id);
-    });
-});
 </script>
 
 </body>
